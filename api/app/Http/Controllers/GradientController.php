@@ -37,11 +37,16 @@ class GradientController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Gradient  $gradient
-     * @return Gradient
+     * @return array
      */
-    public function show(Gradient $gradient): Gradient
+    public function show(Gradient $gradient)
     {
-        return $gradient;
+
+        return [
+            'gradient' => $gradient,
+            'upvotes' => $gradient->votes()->where('type', 'UPVOTE')->count(),
+            'downvotes' => $gradient->votes()->where('type', 'DOWNVOTE')->count()
+        ];
     }
 
     /**

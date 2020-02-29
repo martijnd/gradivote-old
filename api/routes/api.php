@@ -25,12 +25,12 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::get('/gradients', 'GradientController@index');
     Route::post('/gradients', 'GradientController@store');
     Route::get('/gradients/{gradient}', 'GradientController@show');
+    Route::post('/gradients/{gradient}/vote', 'VoteController@store');
     Route::delete('/gradients/{gradient}', 'GradientController@destroy');
 
     // Votes
     Route::get('votes', 'VoteController@index');
     Route::get('votes/{vote}', 'VoteController@show');
-    Route::post('votes', 'VoteController@store');
 });
 
 

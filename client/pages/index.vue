@@ -1,77 +1,68 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        client
-      </h1>
-      <h2 class="subtitle">
-        My beautiful Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+  <div class="min-h-screen flex flex-wrap mb-4" :style="'background: '+ gradient.data.rule">
+    <LoginForm v-if="!loggedIn" />
+    <div v-if="loggedIn">
+      {{ user.name }}
+      <button
+        @click="vote('UPVOTE')"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="button"
+      >👍</button>
+      <button
+        @click="vote('DOWNVOTE')"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="button"
+      >👎</button>
+      <div class="block">
+        <p>👍: {{gradient.upvotes }}👎: {{gradient.downvotes }}</p>
+        <p>Total: {{gradient.upvotes - gradient.downvotes }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import LoginForm from '../components/LoginForm';
 
 export default {
-  components: {
-    Logo
+  components: { LoginForm },
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
+    loggedIn() {
+      return this.$store.state.loggedIn;
+    },
+    api_token() {
+      return this.$store.state.user.api_token;
+    },
+    gradient() {
+      return this.$store.state.gradient;
+    }
+  },
+  methods: {
+    async getGradient() {
+      const response = await this.$axios({
+        method: 'get',
+        url: '/gradient',
+        headers: {
+          Authorization: `Bearer ${this.api_token}`
+        }
+      });
+      this.$store.commit('setGradient', response.data);
+    },
+    async vote(type) {
+      const response = await this.$axios({
+        method: 'post',
+        url: `/gradients/${this.gradient.data.id}/vote`,
+        headers: {
+          Authorization: `Bearer ${this.api_token}`
+        },
+        data: { type }
+      });
+
+      this.getGradient();
+    }
   }
-}
+};
 </script>
-
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-  @apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>

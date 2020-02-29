@@ -17,13 +17,13 @@ A simple poll app for voting on gradients
 - [x] POST /login - Login a user with credentials  
 
 - [x] POST /user - Get current logged in user  
-- [ ] GET /user/{id}/votes - Get user votes  
-- [ ] GET /user/{id}/gradients - Get user gradients  
+- [x] GET /user/{id}/votes - Get user votes  
+- [x] GET /user/{id}/gradients - Get user gradients  
 
 - [x] GET /gradients - Get all gradients  
 - [x] GET /gradients/{id} - Get a gradient    
-- [ ] POST /gradients - Submit a new gradient  
-- [ ] (DELETE /gradients/{id} - Delete a gradient)  
+- [x] POST /gradients - Submit a new gradient  
+- [x] (DELETE /gradients/{id} - Delete a gradient)  
 
 - [x] GET /votes - Get all votes
 - [x] GET /votes/{id} - Get vote by id

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Gradient;
+use App\Vote;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GradientController extends Controller
 {
@@ -18,6 +20,39 @@ class GradientController extends Controller
         $gradients = Gradient::all();
 
         return response()->json($gradients);
+    }
+
+    /**
+     * Return a random gradient that the current user has not yet voted on.
+     *
+     */
+    public function random()
+    {
+        $gradientCount = Gradient::all()->count();
+        $hasVoted = null;
+        $randomGradient = Gradient::find(random_int(1, $gradientCount));
+        $attempts = 0;
+
+        while($hasVoted) {
+            $hasVoted = Vote::where([
+                'user_id' => Auth::guard('api')->id(),
+                'gradient_id' => $randomGradient->id
+            ])->first();
+
+            $attempts++;
+        }
+
+        if ($attempts == 100) {
+            return response()->json('No more gradients to rate!');
+        }
+
+        $gradient = Gradient::find(random_int(1, $gradientCount));
+
+        return [
+            'data' => $gradient,
+            'upvotes' => $gradient->votes()->where('type', 'UPVOTE')->count(),
+            'downvotes' => $gradient->votes()->where('type', 'DOWNVOTE')->count()
+        ];
     }
 
     /**

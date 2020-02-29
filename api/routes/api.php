@@ -23,6 +23,7 @@ Route::group(['middleware' => ['auth:api']], function() {
 
     // Gradients
     Route::get('/gradients', 'GradientController@index');
+    Route::get('/gradient', 'GradientController@random');
     Route::post('/gradients', 'GradientController@store');
     Route::get('/gradients/{gradient}', 'GradientController@show');
     Route::post('/gradients/{gradient}/vote', 'VoteController@store');

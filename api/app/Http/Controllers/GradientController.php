@@ -13,54 +13,48 @@ class GradientController extends Controller
      *
      * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $gradients = Gradient::all();
+
         return response()->json($gradients);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return JsonResponse
      */
     public function store(Request $request)
     {
-        //
+        $gradient = Gradient::create($request->all());
+
+        return response()->json($gradient);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Gradient  $gradient
-     * @return \Illuminate\Http\Response
+     * @return Gradient
      */
-    public function show(Gradient $gradient)
+    public function show(Gradient $gradient): Gradient
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Gradient  $gradient
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Gradient $gradient)
-    {
-        //
+        return $gradient;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Gradient  $gradient
-     * @return \Illuminate\Http\Response
+     * @param \App\Gradient $gradient
+     * @return JsonResponse
+     * @throws \Exception
      */
-    public function destroy(Gradient $gradient)
+    public function destroy(Gradient $gradient): JsonResponse
     {
-        //
+        $gradient->delete();
+
+        return response()->json('Gradient successfully deleted');
     }
 }

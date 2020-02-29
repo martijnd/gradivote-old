@@ -13,4 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::post('register', 'Auth\RegisterController@register');
+
 Route::middleware('auth:api')->post('/user', 'UserController@show');

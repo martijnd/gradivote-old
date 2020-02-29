@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 10)->create()->each(function(User $user) {
+        factory(App\User::class, 10)->create()->each(function (User $user) {
             $user->gradients()->createMany(
                 factory(App\Gradient::class, 10)->make()->toArray());
         });

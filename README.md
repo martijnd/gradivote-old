@@ -13,17 +13,17 @@ A simple poll app for voting on gradients
 - Worst gradients list
 
 ## Endpoints
-POST /register - Register a user
-POST /login - Login a user with credentials
+POST /register - Register a user  
+POST /login - Login a user with credentials  
 
-POST /user - Get current logged in user
-GET /user/votes - Get user votes
-GET /user/gradients - Get user gradients
+POST /user - Get current logged in user  
+GET /user/votes - Get user votes  
+GET /user/gradients - Get user gradients  
 
-GET /gradient - Get all gradients
-GET /gradient/{id} - Get a gradient
-PATCH /gradient/{id} - Update a gradient
-POST /gradient - Submit a new gradient
-(DELETE /gradient/{id} - Delete a gradient)
+GET /gradients - Get all gradients  
+GET /gradients/{id} - Get a gradient  
+PATCH /gradients/{id} - Update a gradient  
+POST /gradients - Submit a new gradient  
+(DELETE /gradients/{id} - Delete a gradient)  
 
-POST /gradient/vote - Submit a gradient vote
+POST /gradients/vote - Submit a gradient vote  

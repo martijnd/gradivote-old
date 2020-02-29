@@ -38,6 +38,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function gradients() {
+        return $this->hasMany('App\Gradient');
+    }
+
+    public function votes() {
+        return $this->hasMany('App\Vote');
+    }
+
     public function generateToken()
     {
         $this->api_token = Str::random(60);

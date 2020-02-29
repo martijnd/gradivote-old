@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,5 +12,16 @@ use Illuminate\Http\Request;
 */
 
 Route::post('register', 'Auth\RegisterController@register');
+Route::post('login', 'Auth\LoginController@login');
 
-Route::middleware('auth:api')->post('/user', 'UserController@show');
+
+Route::group(['middlware' => ['auth:api']], function() {
+    Route::post('/user', 'UserController@show');
+
+
+    // Gradients
+    Route::get('/gradients', 'GradientController@index');
+});
+
+
+

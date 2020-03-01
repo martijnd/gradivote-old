@@ -21,6 +21,7 @@ return [
 
         'allow_origins' => [
             'http://localhost:3000',
+            '*.ngrok.io'
         ],
 
         'allow_methods' => [

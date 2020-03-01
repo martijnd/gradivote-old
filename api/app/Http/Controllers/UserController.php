@@ -15,7 +15,7 @@ class UserController extends Controller
     }
 
     public function gradients() {
-        $gradients = Gradient::where('user_id', Auth::guard('api')->id())->get();
+        $gradients = Gradient::where('user_id', Auth::guard('api')->id())->with('votes')->get();
 
         return response()->json($gradients);
     }

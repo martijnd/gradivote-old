@@ -44,6 +44,23 @@ class GradientController extends Controller
     }
 
     /**
+     * The best gradients that belong in the Hall of Fame.
+     * WORK IN PROGRESS
+     */
+    public function best()
+    {
+        $best = Gradient::with('votes')
+            ->withCount('votes')
+            ->orderBy(function($query) {
+                return $query->first()->votes()->where('type', 'UPVOTE')->count() -
+                    $query->first()->votes()->where('type', 'DOWNVOTE')->count();
+            }, 'desc')
+            ->get();
+
+        dd($best);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param Request $request

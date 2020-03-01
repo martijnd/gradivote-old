@@ -30,13 +30,13 @@ class VoteController extends Controller
     public function store(Request $request, Gradient $gradient)
     {
 
-        $vote = Vote::create([
+        Vote::create([
             'user_id' => Auth::guard('api')->id(),
             'gradient_id' => $gradient->id,
             'type' => $request->input('type')
         ]);
 
-        return response()->json($vote);
+        return response()->json(GradientController::random());
     }
 
     /**

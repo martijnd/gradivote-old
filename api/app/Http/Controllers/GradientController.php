@@ -26,14 +26,11 @@ class GradientController extends Controller
      * Return a random gradient that the current user has not yet voted on.
      *
      */
-    public function random()
+    public static function random()
     {
-        $gradientCount = Gradient::all()->count();
-        $attempts = 0;
-
         $gradient = Gradient::whereDoesntHave('votes', function($query) {
             $query->where('user_id', Auth::guard('api')->id());
-        })->first();
+        })->get()->shuffle()->first();
 
         if (!$gradient) {
             return response()->json('No more gradients to rate', 201);

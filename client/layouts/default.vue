@@ -1,9 +1,21 @@
 <template>
-  <div>
+  <div class="flex flex-col min-h-screen p-4" :style="'background: '+ gradient.data.rule">
+    <Navbar />
     <nuxt />
   </div>
 </template>
+<script>
+import Navbar from '../components/Navbar';
 
+export default {
+  components: { Navbar },
+  computed: {
+    gradient() {
+      return this.$store.state.gradient;
+    }
+  }
+};
+</script>
 <style>
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',

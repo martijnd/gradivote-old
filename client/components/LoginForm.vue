@@ -22,7 +22,7 @@
           placeholder="Password"
         />
       </div>
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-center">
         <button
           @click="login"
           class="px-4 py-2 font-bold text-white bg-indigo-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
@@ -37,7 +37,7 @@
 export default {
   data() {
     return {
-      email: 'will.lonie@example.com',
+      email: 'porter48@example.net',
       password: 'password'
     };
   },

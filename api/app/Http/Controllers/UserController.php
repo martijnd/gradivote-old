@@ -21,7 +21,7 @@ class UserController extends Controller
     }
 
     public function votes() {
-        $votes = Vote::where('user_id', Auth::guard('api')->id())->get();
+        $votes = Vote::where('user_id', Auth::guard('api')->id())->with('gradient')->get();
 
         return response()->json($votes);
     }

@@ -1,10 +1,17 @@
 <template>
   <div class="flex justify-between">
-    <h2 class="p-4 text-lg font-bold text-white">{{ user ? user.name : 'Gradivote' }}</h2>
-    <button
-      class="p-3 m-1 font-bold text-white rounded hover:bg-white hover:text-black"
-      @click="logOut"
-    >Sign out</button>
+    <nuxt-link to="/" class="p-4 text-lg font-bold text-white">{{ user ? user.name : 'Gradivote' }}</nuxt-link>
+    <div>
+      <nuxt-link
+        to="/profile"
+        class="p-4 mr-4 font-bold text-white rounded hover:bg-white hover:text-black"
+        @click="logOut"
+      >Profile</nuxt-link>
+      <button
+        class="p-4 font-bold text-white rounded hover:bg-white hover:text-black"
+        @click="logOut"
+      >Sign out</button>
+    </div>
   </div>
 </template>
 

@@ -45,6 +45,7 @@ export const actions = {
   logOut({ commit }) {
     commit('logOut');
   },
+
   async getGradient({ commit, state }) {
     const response = await this.$axios({
       method: 'get',
@@ -54,14 +55,10 @@ export const actions = {
       }
     });
 
-    if (response.status === 200) {
-      commit('getGradient', response.data);
-    } else {
-      commit('setErrorMessage', response.data);
-    }
+    setGradient(response, commit);
   },
 
-  async vote({ dispatch, state }, type) {
+  async vote({ commit, state }, type) {
     const response = await this.$axios({
       method: 'post',
       url: `/gradients/${state.gradient.data.id}/vote`,
@@ -71,7 +68,14 @@ export const actions = {
       data: { type }
     });
 
-    // After voting, fetch a new gradient
-    dispatch('getGradient');
+    setGradient(response, commit);
+  }
+};
+
+const setGradient = (response, commit) => {
+  if (response.status === 200) {
+    commit('getGradient', response.data);
+  } else {
+    commit('setErrorMessage', response.data);
   }
 };

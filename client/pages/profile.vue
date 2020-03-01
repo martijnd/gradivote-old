@@ -23,6 +23,9 @@ export default {
   computed: {
     api_token() {
       return this.$store.state.user.api_token;
+    },
+    loggedIn() {
+      return this.$store.state.loggedIn;
     }
   },
   methods: {
@@ -34,12 +37,17 @@ export default {
           Authorization: `Bearer ${this.api_token}`
         }
       });
-      console.log(response);
       this.votes = response.data;
     }
   },
   mounted() {
-    this.getVotes();
+    if (this.loggedIn) {
+      this.getVotes();
+    } else {
+      this.$router.push({
+        path: '/'
+      });
+    }
   }
 };
 </script>

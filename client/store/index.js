@@ -1,10 +1,11 @@
 export const state = () => ({
   user: null,
   loggedIn: false,
+  error: { message: '' },
   gradient: {
     data: {
       id: 1,
-      rule: 'linear-gradient(61deg, #5d66da, #c6dd00 100%);'
+      rule: 'linear-gradient(9deg, rgb(255, 131, 239), rgb(173, 93, 161) 100%);'
     },
     upvotes: 0,
     downvotes: 0
@@ -16,14 +17,21 @@ export const mutations = {
     state.user = user;
     state.loggedIn = true;
   },
+  logOut(state) {
+    state.user = null;
+    state.loggedIn = false;
+  },
   getGradient(state, gradient) {
     state.gradient = gradient;
+  },
+  setErrorMessage(state, message) {
+    console.log(state.error, message);
+    state.error.message = message;
   }
 };
 
 export const actions = {
   async login({ commit, dispatch }, data) {
-    console.log(data);
     const response = await this.$axios({
       method: 'post',
       url: '/login',
@@ -31,6 +39,10 @@ export const actions = {
     });
     commit('login', response.data);
     dispatch('getGradient');
+  },
+
+  logOut({ commit }) {
+    commit('logOut');
   },
   async getGradient({ commit, state }) {
     const response = await this.$axios({
@@ -40,8 +52,12 @@ export const actions = {
         Authorization: `Bearer ${state.user.api_token}`
       }
     });
-
-    commit('getGradient', response.data);
+    console.log(response);
+    if (response.status === 200) {
+      commit('getGradient', response.data);
+    } else {
+      commit('setErrorMessage', response.data);
+    }
   },
 
   async vote({ dispatch, state }, type) {

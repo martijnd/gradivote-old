@@ -29,30 +29,28 @@ class GradientController extends Controller
     public function random()
     {
         $gradientCount = Gradient::all()->count();
-        $hasVoted = null;
-        $randomGradient = Gradient::find(random_int(1, $gradientCount));
         $attempts = 0;
 
-        while($hasVoted) {
+        while (true) {
+            $randomGradient = Gradient::find(random_int(1, $gradientCount));
             $hasVoted = Vote::where([
                 'user_id' => Auth::guard('api')->id(),
                 'gradient_id' => $randomGradient->id
             ])->first();
 
+            if (!$hasVoted) {
+                return [
+                    'data' => $randomGradient,
+                    'upvotes' => $randomGradient->votes()->where('type', 'UPVOTE')->count(),
+                    'downvotes' => $randomGradient->votes()->where('type', 'DOWNVOTE')->count()
+                ];
+            }
+
             $attempts++;
+            if ($attempts == 100) {
+                return response()->json('No more gradients to rate!', 201);
+            }
         }
-
-        if ($attempts == 100) {
-            return response()->json('No more gradients to rate!');
-        }
-
-        $gradient = Gradient::find(random_int(1, $gradientCount));
-
-        return [
-            'data' => $gradient,
-            'upvotes' => $gradient->votes()->where('type', 'UPVOTE')->count(),
-            'downvotes' => $gradient->votes()->where('type', 'DOWNVOTE')->count()
-        ];
     }
 
     /**
@@ -71,7 +69,7 @@ class GradientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Gradient  $gradient
+     * @param \App\Gradient $gradient
      * @return array
      */
     public function show(Gradient $gradient)

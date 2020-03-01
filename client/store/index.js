@@ -52,7 +52,7 @@ export const actions = {
         Authorization: `Bearer ${state.user.api_token}`
       }
     });
-    console.log(response);
+
     if (response.status === 200) {
       commit('getGradient', response.data);
     } else {

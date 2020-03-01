@@ -20,6 +20,7 @@ export const mutations = {
   logOut(state) {
     state.user = null;
     state.loggedIn = false;
+    state.error.message = '';
   },
   getGradient(state, gradient) {
     state.gradient = gradient;

@@ -1,5 +1,13 @@
 {
   "version": 2,
+  "env": {
+    "API_BASE_URL": "https://uurbestuur.nl"
+  },
+  "build": {
+    "env": {
+      "API_BASE_URL": "https://uurbestuur.nl"
+    }
+  },
   "builds": [
     {
       "src": "nuxt.config.js",

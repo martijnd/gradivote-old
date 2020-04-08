@@ -13,11 +13,10 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
-    "firebase": "^7.13.2",
-    "dotenv": "^8.2.0",
     "nuxt": "^2.0.0"
   },
   "devDependencies": {
+    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/tailwindcss": "^1.0.0",
     "@vue/test-utils": "^1.0.0-beta.27",
     "babel-jest": "^24.1.0",

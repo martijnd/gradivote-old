@@ -37,7 +37,7 @@
 export default {
   data() {
     return {
-      email: 'porter48@example.net',
+      email: 'test@test.com',
       password: 'password'
     };
   },

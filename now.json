@@ -1,11 +1,11 @@
 {
   "version": 2,
   "env": {
-    "API_BASE_URL": "https://uurbestuur.nl"
+    "API_BASE_URL": "https://uurbestuur.nl/api"
   },
   "build": {
     "env": {
-      "API_BASE_URL": "https://uurbestuur.nl"
+      "API_BASE_URL": "https://uurbestuur.nl/api"
     }
   },
   "builds": [

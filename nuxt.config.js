@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 export default {
   mode: 'universal',
   /*
@@ -41,7 +43,9 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth',
+    '@nuxtjs/dotenv'
   ],
 
   /*
@@ -52,6 +56,17 @@ export default {
     baseURL: process.env.api_base_url,
     headers: { 'Content-Type': 'application/json' }
   },
+
+  auth: {
+    strategies: {
+      'laravel.passport': {
+        url: process.env.API_BASE_URL,
+        client_id: process.env.CLIENT_ID,
+        client_secret: process.env.CLIENT_SECRET
+      }
+    }
+  },
+
   /*
    ** Build configuration
    */

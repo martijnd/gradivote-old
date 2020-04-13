@@ -37,15 +37,17 @@
 export default {
   data() {
     return {
-      email: '',
-      password: ''
+      email: 'test@test.com',
+      password: 'password'
     };
   },
   methods: {
     async login() {
-      this.$store.dispatch('login', {
-        email: this.email,
-        password: this.password
+      this.$auth.loginWith('laravel.passport', {
+        data: {
+          username: this.email,
+          password: this.password
+        }
       });
     }
   }

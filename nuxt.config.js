@@ -49,7 +49,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env.API_BASE_URL,
+    baseURL: process.env.api_base_url,
     headers: { 'Content-Type': 'application/json' }
   },
   /*

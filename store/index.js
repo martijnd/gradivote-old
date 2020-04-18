@@ -25,13 +25,18 @@ export const mutations = {
 };
 
 export const actions = {
+  async register({commit, state}, data) {
+    const response = await this.$axios({
+      method: 'post',
+      url: 'api/register',
+      data
+    })
+  },
+
   async getGradient({ commit, state }) {
     const response = await this.$axios({
       method: 'get',
       url: 'api/gradient',
-      headers: {
-        Authorization: `Bearer ${state.user.api_token}`
-      }
     });
 
     setGradient(response, commit);

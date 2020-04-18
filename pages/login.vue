@@ -5,9 +5,12 @@
 </template>
 
 <script>
+import LoginForm from '@/components/LoginForm.vue';
+
 
 export default {
   middleware: 'guest',
+  components: { LoginForm },
   computed: {
     loggedIn() {
       return this.$store.state.loggedIn;

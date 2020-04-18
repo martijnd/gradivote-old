@@ -60,10 +60,10 @@ export default {
   middleware: 'guest',
   data() {
     return {
-      name: 'Martijn Dorsman',
-      email: 'martijn.dorsman@gmail.com',
-      password: 'password',
-      password_confirmation: 'password',
+      name: '',
+      email: '',
+      password: '',
+      password_confirmation: '',
       errorMessage: ''
     }
   },

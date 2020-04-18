@@ -53,16 +53,33 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env.api_base_url,
+    baseURL: process.env.API_BASE_URL,
     headers: { 'Content-Type': 'application/json' }
   },
 
   auth: {
+    redirect: {
+      login: '/',
+      logout: '/login',
+      callback: '/login',
+      home: '/'
+    },
     strategies: {
+      local: false,
       'laravel.passport': {
-        url: process.env.API_BASE_URL,
-        client_id: process.env.CLIENT_ID,
-        client_secret: process.env.CLIENT_SECRET
+        _scheme: 'local',
+        endpoints: {
+          login: {
+            url: '/oauth/token',
+            method: 'post',
+            propertyName: 'access_token'
+          },
+          logout: false,
+          user: {
+            url: 'api/auth/me',
+            method: 'get',
+          }
+        }
       }
     }
   },

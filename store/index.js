@@ -1,7 +1,6 @@
 export const state = () => ({
-  user: null,
-  loggedIn: false,
   error: { message: '' },
+  userVotes: [],
   gradient: {
     data: {
       id: 1,
@@ -13,49 +12,31 @@ export const state = () => ({
 });
 
 export const mutations = {
-  login(state, user) {
-    state.user = user;
-    state.loggedIn = true;
-  },
-  logOut(state) {
-    state.user = null;
-    state.loggedIn = false;
-    state.error.message = '';
-  },
   getGradient(state, gradient) {
     state.gradient = gradient;
   },
   setErrorMessage(state, message) {
     console.log(state.error, message);
     state.error.message = message;
+  },
+  setUserVotes(state, votes) {
+    state.userVotes = votes;
   }
 };
 
-
-
 export const actions = {
-
-  async login({ commit, dispatch }, data) {
+  async register({commit, state}, data) {
     const response = await this.$axios({
       method: 'post',
-      url: '/login',
+      url: 'api/register',
       data
-    });
-    commit('login', response.data);
-    dispatch('getGradient');
-  },
-
-  logOut({ commit }) {
-    commit('logOut');
+    })
   },
 
   async getGradient({ commit, state }) {
     const response = await this.$axios({
       method: 'get',
-      url: '/gradient',
-      headers: {
-        Authorization: `Bearer ${state.user.api_token}`
-      }
+      url: 'api/gradient',
     });
 
     setGradient(response, commit);
@@ -64,14 +45,20 @@ export const actions = {
   async vote({ commit, state }, type) {
     const response = await this.$axios({
       method: 'post',
-      url: `/gradients/${state.gradient.data.id}/vote`,
-      headers: {
-        Authorization: `Bearer ${state.user.api_token}`
-      },
+      url: `api/gradients/${state.gradient.data.id}/vote`,
       data: { type }
     });
 
     setGradient(response, commit);
+  },
+
+  async getUserVotes({commit, state}) {
+    const response = await this.$axios({
+      method: 'get',
+      url: 'api/user/votes',
+    });
+
+    commit('setUserVotes', response.data);
   }
 };
 

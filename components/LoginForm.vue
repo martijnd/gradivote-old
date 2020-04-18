@@ -43,9 +43,15 @@ export default {
   },
   methods: {
     async login() {
-      this.$store.dispatch('login', {
-        email: this.email,
-        password: this.password
+      this.$auth.loginWith('laravel.passport', {
+        data: {
+          grant_type: 'password',
+          client_id: process.env.CLIENT_ID,
+          client_secret: process.env.CLIENT_SECRET,
+          scope: '',
+          username: this.email,
+          password: this.password,
+        }
       });
     }
   }

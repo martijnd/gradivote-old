@@ -41,7 +41,8 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
 
   /*
@@ -52,6 +53,34 @@ export default {
     baseURL: process.env.API_BASE_URL,
     headers: { 'Content-Type': 'application/json' }
   },
+
+  auth: {
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: '/login',
+      home: '/'
+    },
+    strategies: {
+      local: false,
+      'laravel.passport': {
+        _scheme: 'local',
+        endpoints: {
+          login: {
+            url: '/oauth/token',
+            method: 'post',
+            propertyName: 'access_token'
+          },
+          logout: false,
+          user: {
+            url: 'api/auth/me',
+            method: 'get',
+          }
+        }
+      }
+    }
+  },
+
   /*
    ** Build configuration
    */
